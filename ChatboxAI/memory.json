@@ -1,0 +1,14 @@
+[
+  {
+    "role": "system",
+    "content": "You are a smart AI agent."
+  },
+  {
+    "role": "user",
+    "content": "hi"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! \ud83d\ude0a How can I assist you today? Feel free to ask me anything\u2014whether it's about a topic you're curious about, help with a problem, or just a fun chat! What\u2019s on your mind? Here are some suggestions if you'd like:\n\n- **General knowledge** (science, history, tech, etc.)\n- **Problem-solving** (math, coding, logic puzzles, etc.)\n- **Artificial Intelligence** (how things work, fun tests, etc.)\n- **Recommendations** (books, movies, hobbies, tools,...)\n- **Productivity tips** (learning, work, creativity)\n- **Random fun** (jokes, riddles, games, memes)"
+  }
+]

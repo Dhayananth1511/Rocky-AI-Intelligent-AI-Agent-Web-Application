@@ -19,9 +19,12 @@ def ask_llm(messages):
         "max_tokens": 200
     }
 
-    response = requests.post(API_URL, headers=headers, json=payload)
+    try:
+        response = requests.post(API_URL, headers=headers, json=payload, timeout=30)
+    except requests.RequestException:
+        return "AI service timed out or is unreachable right now."
 
     if response.status_code == 200:
         return response.json()["choices"][0]["message"]["content"]
     else:
-        return "AI Error"
+        return f"AI Error ({response.status_code})"
