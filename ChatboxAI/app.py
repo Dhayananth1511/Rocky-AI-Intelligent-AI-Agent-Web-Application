@@ -11,21 +11,34 @@ messages = load_memory()
 def home():
     return render_template("index.html")
 
+@app.route("/healthz")
+def healthz():
+    return jsonify({"status": "ok"}), 200
+
 @app.route("/chat", methods=["POST"])
 def chat():
     global messages
 
-    user_input = request.json["message"]
+    data = request.get_json(silent=True) or {}
+    user_input = (data.get("message") or "").strip()
+    if not user_input:
+        return jsonify({"error": "Message is required."}), 400
 
     messages.append({"role": "user", "content": user_input})
 
     messages = trim_memory(messages)
 
-    reply = agent_decide(messages, user_input)
+    try:
+        reply = agent_decide(messages, user_input)
+    except Exception:
+        return jsonify({"error": "AI service failed. Please try again."}), 502
 
     messages.append({"role": "assistant", "content": reply})
 
-    save_memory(messages)
+    try:
+        save_memory(messages)
+    except Exception:
+        pass
 
     return jsonify({"reply": reply})
 @app.route("/reset", methods=["POST"])

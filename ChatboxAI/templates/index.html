@@ -326,7 +326,7 @@ async function sendMessage() {
         <input type="text" id="userInput"
                placeholder="Send a message..."
                onkeydown="if(event.key==='Enter') sendMessage()">
-        <button onclick="sendMessage()">Send</button>
+        <button id="sendBtn" onclick="sendMessage()">Send</button>
     </div>
 </div>
 
@@ -338,6 +338,7 @@ async function sendMessage() {
 async function sendMessage() {
 
     const input = document.getElementById("userInput");
+    const sendBtn = document.getElementById("sendBtn");
     const message = input.value.trim();
     if (!message) return;
 
@@ -352,22 +353,41 @@ async function sendMessage() {
 
     chatbox.scrollTop = chatbox.scrollHeight;
     input.value = "";
+    input.disabled = true;
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Sending...";
 
-    // Fetch reply
-    const response = await fetch("/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: message })
-    });
+    try {
+        // Fetch reply
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: message })
+        });
 
-    const data = await response.json();
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.error || `Request failed (${response.status})`);
+        }
 
-    // Bot message
-    chatbox.innerHTML += `
-        <div class="message-row bot-row">
-            <div class="message bot">${marked.parse(data.reply)}</div>
-        </div>
-    `;
+        // Bot message
+        chatbox.innerHTML += `
+            <div class="message-row bot-row">
+                <div class="message bot">${marked.parse(data.reply)}</div>
+            </div>
+        `;
+    } catch (error) {
+        chatbox.innerHTML += `
+            <div class="message-row bot-row">
+                <div class="message bot">Error: ${error.message}</div>
+            </div>
+        `;
+    } finally {
+        input.disabled = false;
+        sendBtn.disabled = false;
+        sendBtn.textContent = "Send";
+        input.focus();
+    }
 
     chatbox.scrollTop = chatbox.scrollHeight;
 }
