@@ -38,5 +38,5 @@ def reset_memory():
 
     return jsonify({"status": "memory cleared"})
 
-if __name__ == "__main__":
-    app.run(debug=True)
+app = Flask(__name__)
+
