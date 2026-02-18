@@ -50,7 +50,7 @@ def chat_with_bot(user_message):
     payload = {
         "model": MODEL,
         "messages": messages,
-        "max_tokens": 200
+        "max_tokens": 100
     }
 
     response = requests.post(API_URL, headers=headers, json=payload)
