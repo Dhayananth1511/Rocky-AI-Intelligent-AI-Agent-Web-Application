@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>AI Assistant</title>
@@ -136,6 +136,196 @@ async function sendMessage() {
     const data = await response.json();
 
     chatbox.innerHTML += `<div class="message bot">${marked.parse(data.reply)}</div>`;
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+</script>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Assistant</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #343541;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Chat area */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        /* Message wrapper */
+        .message-row {
+            display: flex;
+            width: 100%;
+        }
+
+        .user-row {
+            justify-content: flex-end;
+        }
+
+        .bot-row {
+            justify-content: flex-start;
+        }
+
+        /* Message bubble */
+        .message {
+            max-width: 700px;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 15px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .user {
+            background-color: #10a37f;
+            color: white;
+        }
+
+        .bot {
+            background-color: #444654;
+            color: white;
+        }
+
+        .message p {
+            margin: 0;
+        }
+
+        /* Input area */
+        .input-container {
+            padding: 15px;
+            background-color: #40414f;
+            display: flex;
+            justify-content: center;
+        }
+
+        .input-box {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            background: #343541;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 15px;
+        }
+
+        button {
+            background: #10a37f;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0e8c6d;
+        }
+        /* Header */
+.header {
+    height: 60px;
+    background-color: #202123;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 1px solid #2f2f2f;
+    text-align: center;
+}
+
+.logo {
+    letter-spacing: 1px;
+}
+
+
+        ::placeholder {
+            color: #8e8ea0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="header">
+    <div class="logo">🤖 Rocky AI</div>
+</div>
+
+<div id="chatbox" class="chat-container"></div>
+
+<div class="input-container">
+    <div class="input-box">
+        <input type="text" id="userInput"
+               placeholder="Send a message..."
+               onkeydown="if(event.key==='Enter') sendMessage()">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+    fetch("/reset", { method: "POST" });
+};
+
+async function sendMessage() {
+
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
+    if (!message) return;
+
+    const chatbox = document.getElementById("chatbox");
+
+    // User message
+    chatbox.innerHTML += `
+        <div class="message-row user-row">
+            <div class="message user">${message}</div>
+        </div>
+    `;
+
+    chatbox.scrollTop = chatbox.scrollHeight;
+    input.value = "";
+
+    // Fetch reply
+    const response = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+    });
+
+    const data = await response.json();
+
+    // Bot message
+    chatbox.innerHTML += `
+        <div class="message-row bot-row">
+            <div class="message bot">${marked.parse(data.reply)}</div>
+        </div>
+    `;
+
     chatbox.scrollTop = chatbox.scrollHeight;
 }
 </script>

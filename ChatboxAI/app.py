@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, jsonify
 from core.memory import load_memory, save_memory, trim_memory
 from core.agent import agent_decide
@@ -27,6 +28,15 @@ def chat():
     save_memory(messages)
 
     return jsonify({"reply": reply})
+@app.route("/reset", methods=["POST"])
+def reset_memory():
+    global messages
+    messages = [{"role": "system", "content": "You are a smart AI agent."}]
+    
+    if os.path.exists("memory.json"):
+        os.remove("memory.json")
+
+    return jsonify({"status": "memory cleared"})
 
 if __name__ == "__main__":
     app.run(debug=True)
