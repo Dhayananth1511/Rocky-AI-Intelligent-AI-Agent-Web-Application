@@ -41,6 +41,39 @@ Live data requires external APIs.
 
 ## 📁 Project Structure
 
+---
 
-LIVE DEMO :  https://ai-projects-blae.onrender.com
+🌐 Live Demo
+
+**Live App:** [(Add your Render deployment link)](https://ai-projects-blae.onrender.com)
+**Source Code:** https://github.com/Dhayananth1511/Rocky-AI-Intelligent-AI-Agent-Web-Application/tree/main
+
+---
+## 📌 Use Cases
+
+AI chatbot demo
+Learning AI agent architecture
+Flask + AI API integration
+Portfolio / resume project
+Cloud deployment practice
+
+---
+## 🔮 Future Enhancements
+Real‑time news integration
+Vector database memory
+Multi‑user sessions
+Model selection
+Streaming AI responses
+Authentication system
+
+---
+
+## 👨‍💻 Author
+
+Dhayananth N
+AI & Full‑Stack Developer
+
+---
+
+
 
