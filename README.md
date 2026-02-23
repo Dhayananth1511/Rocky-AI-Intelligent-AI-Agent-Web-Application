@@ -51,29 +51,30 @@ Live data requires external APIs.
 ---
 ## 📌 Use Cases
 
-AI chatbot demo
-Learning AI agent architecture
-Flask + AI API integration
-Portfolio / resume project
-Cloud deployment practice
+AI chatbot demo<br>
+Learning AI agent architecture<br>
+Flask + AI API integration<br>
+Portfolio / resume project<br>
+Cloud deployment practice<br>
 
 ---
 ## 🔮 Future Enhancements
-Real‑time news integration
-Vector database memory
-Multi‑user sessions
-Model selection
-Streaming AI responses
-Authentication system
+Real‑time news integration<br>
+Vector database memory<br>
+Multi‑user sessions<br>
+Model selection<br>
+Streaming AI responses<br>
+Authentication system<br>
 
 ---
 
 ## 👨‍💻 Author
 
-Dhayananth N
-AI & Full‑Stack Developer
+Dhayananth N<br>
+AI & Full‑Stack Developer<br>
 
 ---
+
 
 
 
