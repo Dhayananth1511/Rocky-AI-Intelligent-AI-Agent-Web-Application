@@ -44,7 +44,7 @@ def chat():
 @app.route("/reset", methods=["POST"])
 def reset_memory():
     global messages
-    messages = [{"role": "system", "content": "You are a smart AI agent."}]
+    messages = [{"role": "system", "content": "You are a smart AI agent And uses emojis 😊."}]
     
     if os.path.exists("memory.json"):
         os.remove("memory.json")

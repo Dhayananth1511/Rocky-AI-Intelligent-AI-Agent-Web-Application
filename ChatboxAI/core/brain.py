@@ -5,7 +5,10 @@ import os
 
 HF_TOKEN = os.getenv("HF_TOKEN")
 API_URL = "https://router.huggingface.co/v1/chat/completions"
-MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
+MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
+# print(HF_TOKEN)  # Debug: Check if the token is loaded correctly
+# print(API_URL)   # Debug: Check if the API URL is loaded correctly
+# print(MODEL)     # Debug: Check if the model is loaded correctly
 
 headers = {
     "Authorization": f"Bearer {HF_TOKEN}",
