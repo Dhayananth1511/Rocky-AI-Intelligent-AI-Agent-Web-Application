@@ -70,10 +70,11 @@ Live data requires external APIs.
 
 ## 👨‍💻 Author
 
-- Dhayananth N<br> .
+- Dhayananth N<br> 
 - AI & Full‑Stack Developer<br>
 
 ---
+
 
 
 
