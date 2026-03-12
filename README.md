@@ -20,8 +20,8 @@ It demonstrates how to build and deploy a real **AI agent architecture** using a
 ## 🧠 AI Model Information
 
 - **Model Name:** `meta-llama/Meta-Llama-3-8B-Instruct`
-- **Model Provider:** :contentReference[oaicite:0]{index=0}
-- **API Platform:** :contentReference[oaicite:1]{index=1}
+- **Model Provider:** :Meta
+- **API Platform:** :Hugging Face Router API
 
 ⚠️ *Note:*  
 This model does **not provide real‑time news or live internet access** by default.  
@@ -34,8 +34,8 @@ Live data requires external APIs.
 - **Backend:** Python, Flask  
 - **Frontend:** HTML, CSS, JavaScript  
 - **AI Integration:** Hugging Face Router API  
-- **Deployment:** :contentReference[oaicite:2]{index=2}  
-- **Version Control:** :contentReference[oaicite:3]{index=3}  
+- **Deployment:** :Render  
+- **Version Control:** :GitHub  
 
 ---
 
@@ -74,6 +74,7 @@ Live data requires external APIs.
 - AI & Full‑Stack Developer<br>
 
 ---
+
 
 
 
