@@ -19,7 +19,7 @@ It demonstrates how to build and deploy a real **AI agent architecture** using a
 
 ## 🧠 AI Model Information
 
-- **Model Name:** `mistralai/Mistral-7B-Instruct-v0.2`
+- **Model Name:** `meta-llama/Meta-Llama-3-8B-Instruct`
 - **Model Provider:** :contentReference[oaicite:0]{index=0}
 - **API Platform:** :contentReference[oaicite:1]{index=1}
 
@@ -74,6 +74,7 @@ Live data requires external APIs.
 - AI & Full‑Stack Developer<br>
 
 ---
+
 
 
 
