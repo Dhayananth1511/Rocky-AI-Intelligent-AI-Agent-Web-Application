@@ -19,7 +19,8 @@ def ask_llm(messages):
     payload = {
         "model": MODEL,
         "messages": messages,
-        "max_tokens": 200
+        "max_tokens": 1000,
+        "temperature": 0.9
     }
 
     try:
