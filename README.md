@@ -1,6 +1,6 @@
 # 🤖 Rocky AI – Intelligent AI Agent Web Application
 
-Rocky AI is a **ChatGPT‑style AI assistant web application** built using Python and Flask.  
+Rocky AI is a **ChatGPT‑style AI assistant web application(Only Chat)** built using Python and Flask.  
 It demonstrates how to build and deploy a real **AI agent architecture** using a cloud‑hosted language model, with a modern UI and scalable backend.
 
 ---
