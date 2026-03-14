@@ -28,6 +28,8 @@
             --scrollbar:    #2e3347;
             --shadow:       0 8px 32px rgba(0,0,0,0.4);
             --glow:         0 0 20px rgba(16,163,127,0.15);
+            --code-bg:      #0d0f18;
+            --code-header:  #161926;
         }
 
         [data-theme="light"] {
@@ -45,6 +47,8 @@
             --scrollbar:    #d1d5db;
             --shadow:       0 4px 20px rgba(0,0,0,0.08);
             --glow:         0 0 20px rgba(16,163,127,0.08);
+            --code-bg:      #1a1d2e;
+            --code-header:  #22263a;
         }
 
         /* ─── Reset & Base ──────────────────────────────────────────── */
@@ -238,8 +242,16 @@
             box-shadow: var(--glow);
         }
 
-        .message {
+        /* ─── Bot message wrapper (positions copy-response btn) ─────── */
+        .bot-message-wrap {
+            position: relative;
             max-width: 680px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .message {
             padding: 13px 17px;
             border-radius: 14px;
             font-size: 14.5px;
@@ -252,6 +264,7 @@
             background: var(--bg-user);
             color: #fff;
             border-bottom-right-radius: 4px;
+            max-width: 680px;
         }
 
         .bot {
@@ -271,18 +284,137 @@
             border-radius: 4px;
             font-size: 13px;
         }
+
+        /* ─── Code Block (pre) ──────────────────────────────────────── */
         .message pre {
-            background: rgba(0,0,0,0.25);
-            border-radius: 8px;
-            padding: 12px;
-            overflow-x: auto;
+            position: relative;
+            background: var(--code-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+            border: 1px solid rgba(255,255,255,0.06);
         }
+
         [data-theme="light"] .message pre {
-            background: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.1);
         }
+
+        /* language label + copy button header bar */
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--code-header);
+            padding: 7px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .code-lang {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: lowercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* ─── User message wrapper ──────────────────────────────────── */
+        .user-message-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0;
+            max-width: 680px;
+        }
+
+        .user-copy-bar {
+            justify-content: flex-end;
+        }
+
+        .user-copy-bar .copy-btn {
+            color: var(--text-muted);
+        }
+
+        .user-copy-bar .copy-btn:hover {
+            color: var(--accent);
+            background: rgba(16,163,127,0.08);
+            border-color: rgba(16,163,127,0.2);
+        }
+
+
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Sora', sans-serif;
+            font-size: 11.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            padding: 3px 8px;
+            cursor: pointer;
+            transition: color 0.18s, background 0.18s, border-color 0.18s, transform 0.15s;
+            white-space: nowrap;
+            line-height: 1;
+        }
+
+        .copy-btn svg {
+            width: 12px;
+            height: 12px;
+            flex-shrink: 0;
+            transition: opacity 0.18s;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent);
+            background: rgba(16,163,127,0.08);
+            border-color: rgba(16,163,127,0.2);
+        }
+
+        .copy-btn:active { transform: scale(0.95); }
+
+        .copy-btn.copied {
+            color: var(--accent);
+            background: rgba(16,163,127,0.12);
+            border-color: rgba(16,163,127,0.3);
+        }
+
+        /* ─── Code block inner scroll area ─────────────────────────── */
         .message pre code {
+            display: block;
             background: none;
-            padding: 0;
+            padding: 14px 16px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #c9d1d9;
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar) transparent;
+        }
+
+        [data-theme="light"] .message pre code {
+            color: #cdd9e5;
+        }
+
+        .message pre code::-webkit-scrollbar { height: 4px; }
+        .message pre code::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 10px; }
+
+        /* ─── Copy Response Button (bottom of bot message) ─────────── */
+        .copy-response-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 4px 4px 0;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .bot-message-wrap:hover .copy-response-bar,
+        .user-message-wrap:hover .copy-response-bar { opacity: 1; }
+
+        .copy-response-btn {
+            font-size: 11.5px;
+            padding: 4px 10px;
         }
 
         /* Typing indicator */
@@ -401,8 +533,13 @@
             .header    { padding: 0 16px; height: 58px; }
             .logo-badge { display: none; }
             .chat-container { padding: 20px 12px 12px; }
-            .message   { font-size: 14px; max-width: 92%; }
+            .message   { font-size: 14px; }
+            .bot-message-wrap { max-width: 92%; }
+            .user      { max-width: 92%; }
             .input-area { padding: 10px 12px 14px; }
+            /* Always show copy bars on mobile (no hover) */
+            .copy-response-bar { opacity: 1; }
+            .user-message-wrap { max-width: 92%; }
         }
     </style>
 </head>
@@ -450,6 +587,14 @@
 </div>
 
 <script>
+    /* ── SVG Icons ── */
+    const ICON_COPY = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </svg>`;
+    const ICON_CHECK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+    </svg>`;
+
     /* ── Theme ── */
     const themes = ['dark', 'light'];
     let currentTheme = localStorage.getItem('rocky-theme') || 'dark';
@@ -467,7 +612,6 @@
         applyTheme(next);
     }
 
-    // Direct button clicks
     document.getElementById('btn-dark').addEventListener('click', e => { e.stopPropagation(); applyTheme('dark'); });
     document.getElementById('btn-light').addEventListener('click', e => { e.stopPropagation(); applyTheme('light'); });
 
@@ -488,6 +632,79 @@
         this.style.height = Math.min(this.scrollHeight, 160) + 'px';
     });
 
+    /* ── Copy helper ── */
+    function triggerCopy(btn, text, resetLabel) {
+        /* resetLabel: what to show after 2s (defaults to "Copy") */
+        const label = resetLabel || 'Copy';
+
+        function markCopied() {
+            btn.innerHTML = `${ICON_CHECK} Copied!`;
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.innerHTML = `${ICON_COPY} ${label}`;
+                btn.classList.remove('copied');
+            }, 2000);
+        }
+
+        function fallbackCopy() {
+            /* Must be visible & in DOM for select() to work */
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0.01;border:none;outline:none;pointer-events:none;';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            try {
+                document.execCommand('copy');
+                markCopied();
+            } catch (e) {
+                /* Last resort: nothing we can do silently */
+                console.warn('Copy failed:', e);
+            }
+            document.body.removeChild(ta);
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(markCopied).catch(fallbackCopy);
+        } else {
+            fallbackCopy();
+        }
+    }
+
+    /* ── Inject copy buttons into all <pre> blocks inside an element ── */
+    function enhanceCodeBlocks(container) {
+        container.querySelectorAll('pre').forEach(pre => {
+            if (pre.querySelector('.code-header')) return; // already enhanced
+
+            const code = pre.querySelector('code');
+            if (!code) return;
+
+            /* Detect language from class e.g. "language-python" */
+            const langClass = [...(code.classList)].find(c => c.startsWith('language-'));
+            const lang = langClass ? langClass.replace('language-', '') : 'code';
+
+            /* Build header bar */
+            const header = document.createElement('div');
+            header.className = 'code-header';
+
+            const langLabel = document.createElement('span');
+            langLabel.className = 'code-lang';
+            langLabel.textContent = lang;
+
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.innerHTML = `${ICON_COPY} Copy`;
+            copyBtn.setAttribute('title', 'Copy code');
+            copyBtn.addEventListener('click', () => {
+                triggerCopy(copyBtn, code.innerText, 'Copy');
+            });
+
+            header.appendChild(langLabel);
+            header.appendChild(copyBtn);
+            pre.insertBefore(header, pre.firstChild);
+        });
+    }
+
     /* ── Chat ── */
     async function sendMessage() {
         const input   = document.getElementById('userInput');
@@ -496,16 +713,37 @@
         const message = input.value.trim();
         if (!message) return;
 
-        // Hide welcome
+        /* Hide welcome */
         const welcome = document.getElementById('welcome');
         if (welcome) welcome.remove();
 
-        // User bubble — preserve line breaks
-        chatbox.insertAdjacentHTML('beforeend', `
-            <div class="message-row user-row">
-                <div class="message user">${escHtml(message).replace(/\n/g, '<br>')}</div>
-            </div>
-        `);
+        /* User bubble */
+        const userRow = document.createElement('div');
+        userRow.className = 'message-row user-row';
+
+        const userWrap = document.createElement('div');
+        userWrap.className = 'user-message-wrap';
+
+        const userMsg = document.createElement('div');
+        userMsg.className = 'message user';
+        userMsg.innerHTML = escHtml(message).replace(/\n/g, '<br>');
+
+        const userCopyBar = document.createElement('div');
+        userCopyBar.className = 'copy-response-bar user-copy-bar';
+
+        const userCopyBtn = document.createElement('button');
+        userCopyBtn.className = 'copy-btn copy-response-btn';
+        userCopyBtn.innerHTML = `${ICON_COPY} Copy`;
+        userCopyBtn.title = 'Copy message';
+        userCopyBtn.addEventListener('click', () => {
+            triggerCopy(userCopyBtn, userMsg.innerText, 'Copy');
+        });
+
+        userCopyBar.appendChild(userCopyBtn);
+        userWrap.appendChild(userCopyBar);
+        userWrap.appendChild(userMsg);
+        userRow.appendChild(userWrap);
+        chatbox.appendChild(userRow);
         scroll();
 
         input.value = '';
@@ -513,7 +751,7 @@
         input.disabled = true;
         sendBtn.disabled = true;
 
-        // Typing indicator
+        /* Typing indicator */
         chatbox.insertAdjacentHTML('beforeend', `
             <div class="message-row bot-row" id="typing">
                 <div class="avatar">🤖</div>
@@ -537,12 +775,43 @@
 
             if (!res.ok) throw new Error(data.error || `Error ${res.status}`);
 
-            chatbox.insertAdjacentHTML('beforeend', `
-                <div class="message-row bot-row">
-                    <div class="avatar">🤖</div>
-                    <div class="message bot">${marked.parse(data.reply)}</div>
-                </div>
-            `);
+            /* Build bot message wrapper */
+            const row = document.createElement('div');
+            row.className = 'message-row bot-row';
+
+            const avatarEl = document.createElement('div');
+            avatarEl.className = 'avatar';
+            avatarEl.textContent = '🤖';
+
+            const wrap = document.createElement('div');
+            wrap.className = 'bot-message-wrap';
+
+            const msgEl = document.createElement('div');
+            msgEl.className = 'message bot';
+            msgEl.innerHTML = marked.parse(data.reply);
+
+            /* Copy-response button bar */
+            const copyBar = document.createElement('div');
+            copyBar.className = 'copy-response-bar';
+
+            const copyRespBtn = document.createElement('button');
+            copyRespBtn.className = 'copy-btn copy-response-btn';
+            copyRespBtn.innerHTML = `${ICON_COPY} Copy response`;
+            copyRespBtn.title = 'Copy full response';
+            copyRespBtn.addEventListener('click', () => {
+                triggerCopy(copyRespBtn, msgEl.innerText, 'Copy response');
+            });
+
+            copyBar.appendChild(copyRespBtn);
+            wrap.appendChild(msgEl);
+            wrap.appendChild(copyBar);
+            row.appendChild(avatarEl);
+            row.appendChild(wrap);
+            chatbox.appendChild(row);
+
+            /* Enhance code blocks inside this message */
+            enhanceCodeBlocks(msgEl);
+
         } catch (err) {
             document.getElementById('typing')?.remove();
             chatbox.insertAdjacentHTML('beforeend', `
